@@ -2,21 +2,103 @@ extends layout
 
 block content
     h1 #{title}
+    br
     form(method="POST", action="/register")
-        // First Name of Student
-        #form-group
-            label First Name:
-            input.form-control(name="first_name", type="text")
 
-        // Last Name of Student
-        #form-group
-            label Last Name:
-            input.form-control(name="last_name", type="text")
+        // Email Address of Alumni
+        .form-group
+            label Email Address
+            input.form-control(name="email", type="email", placeholder="eg: jackdoe@email.com")
+            small.form-text.text-muted Your email address is private and will only be used for login purposes.
 
-        // Father's Full Name of Student
-        #form-group
-            label Father's Full Name:
-            input.form-control(name="father_name", type="text")
+        // Name of Alumni (First, Middle, Last)
+        .form-group
+            label Name
+            .form-row
+                .col
+                    input.form-control(name="first_name", type="text", placeholder="First Name")
+                .col
+                    input.form-control(name="father_name", type="text", placeholder="Middle Name")
+                .col
+                    input.form-control(name="last_name", type="text", placeholder="Last Name")
+
+        // Password
+        .form-group
+            .form-row
+                .col-4
+                    label Password
+                    input.form-control(name="pass", type="password", placeholder="Enter password here")
+                .col-4
+                    label Confirm Password
+                    input.form-control(name="conf_pass", type="password", placeholder="Enter password again")
+            small.form-text.text-muted Password must be 8-20 characters long.
+
+        // Branch & Graduation Year
+        .form-group
+            .form-row
+                .col-3
+                    label Branch
+                    select.form-control
+                        option(selected) -- Select your branch --
+                        option Computer Engineering
+                        option Mechanical Engineering
+                        option Civil Engineering
+                        option Electrical Engineering
+                        option Chemical Engineering
+                .col-2
+                    label Graduation Year
+                    input.form-control(name="grad_year", type="text", placeholder="eg: 2020")
+
+        // Further Education and Placement Details
+        .form-group
+            label Are you pursuing or have finished further education?
+            .form-check
+                input.form-check-input(name="high_edu_yes", type="radio")
+                label.form-check-label Yes
+            .form-check
+                input.form-check-input(name="high_edu_no", type="radio")
+                label.form-check-label No
+
+        .form-group
+            .form-row
+                .col-6
+                    label Name of College
+                    input.form-control(name="college", type="text")
+                .col-2
+                    label Graduation Year
+                    input.form-control(name="high_grad_year", type="text")
+
+        .form-group
+            label Are you current placed/working?
+            .form-check
+                input.form-check-input(name="placed_yes", type="radio")
+                label.form-check-label Yes
+            
+            .form-check
+                input.form-check-input(name="placed_no", type="radio")
+                label.form-check-label No
+
+        .form-group
+            .form-row
+                .col-6
+                    label Name of Company
+                    input.form-control(name="company_name", type="text")
+                .col-2
+                    label Join Date
+                    input.form-control(name="company_join_date", type="date")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Achievements/Internships/etc
+                    textarea.form-control(name="achievements", rows="4")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Bio
+                    textarea.form-control(name="bio", rows="4")
+                    small.form-text.text-muted Character limit: 2000
 
         // Submit Button
         input.btn.btn-primary(type="submit", value="Register")

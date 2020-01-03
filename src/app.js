@@ -2,7 +2,7 @@ const express = require("express");
 const app = module.exports = express();
 const { join } = require("path");
 const mongoose = require("mongoose");
-const Student = require("./Models/studentModel.js");
+const Alumni = require("./Models/alumniModel.js");
 const bodyParser = require("body-parser");
 
 // Connect Database
@@ -44,6 +44,15 @@ app.get("/", (req, res) => {
     });
 });
 
+// Dashboard Prototype
+app.get("/users", (req, res) => {
+    Alumni.find({}, (err, students) => {
+        if (err) return console.error(err);
+
+        res.render("users", { users: students });
+    })
+})
+
 // Register GET Route
 app.get("/register", (req, res) => {
     res.render("register", {
@@ -53,7 +62,7 @@ app.get("/register", (req, res) => {
 
 // Register POST Route
 app.post("/register", (req, res) => {
-    const newStud = new Student({
+    const newStud = new Alumni({
         firstName: req.body.first_name,
         lastName: req.body.last_name,
         fatherName: req.body.father_name
@@ -64,3 +73,5 @@ app.post("/register", (req, res) => {
         else res.redirect("/");
     });
 });
+
+// 

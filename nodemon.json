@@ -1,0 +1,4 @@
+{
+    "ext": "js,pug,json",
+    "watch": ["src"]
+}

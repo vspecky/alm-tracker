@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="utf-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+        title Alumni tracker
+        link(rel="stylesheet", type="text/css", href="/css/bootstrap.css")
+    body
+        nav.navbar.navbar-expand-md.navbar-dark.bg-dark
+            a.navbar-brand(href='/') AlmTracker
+            button.navbar-toggler(type='button', data-toggle='collapse', data-target='#mainNavbar', aria-controls='mainNavbar', aria-expanded='false', aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            #mainNavbar.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item
+                        a.nav-link(href='/register') Register
+
+        .container
+            block content
+            br
+            hr
+            footer
+                p Copyright &copy; 2020
+
+        script(src="/js/jquery.js")
+        script(src="/js/bootstrap.js")

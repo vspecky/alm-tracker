@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1 #{title}
+    form(method="POST", action="/register")
+        // First Name of Student
+        #form-group
+            label First Name:
+            input.form-control(name="first_name", type="text")
+
+        // Last Name of Student
+        #form-group
+            label Last Name:
+            input.form-control(name="last_name", type="text")
+
+        // Father's Full Name of Student
+        #form-group
+            label Father's Full Name:
+            input.form-control(name="father_name", type="text")
+
+        // Submit Button
+        input.btn.btn-primary(type="submit", value="Register")

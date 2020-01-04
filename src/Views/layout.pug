@@ -18,6 +18,8 @@ html(lang="en")
                         a.nav-link(href='/users') Users
 
         .container
+            .container
+                != messages("messages", locals)
             block content
             br
             hr

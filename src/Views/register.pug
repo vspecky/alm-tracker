@@ -38,7 +38,7 @@ block content
             .form-row
                 .col-3
                     label Branch
-                    select.form-control
+                    select.form-control(name="branch")
                         option(selected) -- Select your branch --
                         option Computer Engineering
                         option Mechanical Engineering
@@ -53,17 +53,17 @@ block content
         .form-group
             label Are you pursuing or have finished further education?
             .form-check
-                input.form-check-input(name="high_edu_yes", type="radio")
+                input.form-check-input(name="high_edu", type="radio", value="yes")
                 label.form-check-label Yes
             .form-check
-                input.form-check-input(name="high_edu_no", type="radio")
+                input.form-check-input(name="high_edu", type="radio", value="no")
                 label.form-check-label No
 
         .form-group
             .form-row
                 .col-6
                     label Name of College
-                    input.form-control(name="college", type="text")
+                    input.form-control(name="high_college", type="text")
                 .col-2
                     label Graduation Year
                     input.form-control(name="high_grad_year", type="text")
@@ -71,11 +71,11 @@ block content
         .form-group
             label Are you current placed/working?
             .form-check
-                input.form-check-input(name="placed_yes", type="radio")
+                input.form-check-input(name="placed", type="radio", value="yes")
                 label.form-check-label Yes
             
             .form-check
-                input.form-check-input(name="placed_no", type="radio")
+                input.form-check-input(name="placed", type="radio", value="no")
                 label.form-check-label No
 
         .form-group
@@ -92,6 +92,7 @@ block content
                 .col-8
                     label Achievements/Internships/etc
                     textarea.form-control(name="achievements", rows="4")
+                    small.form-text.text-muted Character Limit: 2000
 
         .form-group
             .form-row

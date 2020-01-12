@@ -142,20 +142,6 @@ router.post("/register", checkNotAuth, [
             res.redirect("/");
         });
     }
-
-    
-
-    /*
-    const newStud = new Alumni({
-        firstName: req.body.first_name,
-        lastName: req.body.last_name,
-        fatherName: req.body.father_name
-    });
-
-    newStud.save(err => {
-        if (err) return console.error(err);
-        else res.redirect("/");
-    });*/
 });
 
 router.get("/login", checkNotAuth, (req, res) => {
@@ -177,7 +163,7 @@ router.delete("/logout", checkAuth, (req, res) => {
 
 router.get("/verify", checkAdmin, async (req, res) => {
     const pendingVerif = await Alumni.find({ verified: false });
-    res.render("verification", {
+    res.render("verify_user", {
         pending: pendingVerif,
         auth: req.isAuthenticated(),
         admin: req.user && req.user.admin

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    br
+    h1 #{article.title}
+    div
+        h5= "By "
+            a(href="/users/dashboard/"+article.userID) #{article.writtenBy}
+        small Submitted on #{article.date}
+    br
+    each str in content
+        p= str
+        br
+    br
+    if myArticle
+        a.btn.btn-light(href="/articles/edit/"+article._id) Edit
+        a.btn.btn-danger.ml-4(href="/articles/delete/"+article._id) Delete
+    br
+    br
+    unless article.verified
+        form(method="POST", action="/articles/verify/"+article._id)
+            .form-group
+                label Verify this Article?
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="yes")
+                    label.form-check-label Yes
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="no")
+                    label.form-check-label No
+
+            input.btn.btn-primary(type="submit", value="Verify")

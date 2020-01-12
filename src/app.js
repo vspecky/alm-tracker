@@ -75,5 +75,12 @@ app.get("/", (req, res) => {
     });
 });
 
+app.get("/test", (req, res) => {
+    res.render("test");
+});
+
 const usersRouter = require("./Routers/users.js");
 app.use("/users", usersRouter);
+
+const articlesRouter = require("./Routers/articles.js");
+app.use("/articles", articlesRouter);

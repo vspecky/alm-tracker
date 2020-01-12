@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1 Submit an Article
+    br
+    form(method="POST", action="/articles/write")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Title
+                    input.form-control(name="title", type="text", placeholder="Your Title...")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Content
+                    textarea.form-control(name="content", rows="9", placeholder="Your content...")
+                    small.form-text.text-muted Character limit: 7000
+        
+        input.btn.btn-primary(type="submit", value="Submit")
+            

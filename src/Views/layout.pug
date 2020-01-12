@@ -16,11 +16,14 @@ html(lang="en")
                     ul.nav.navbar-nav.mr-auto
                         li.nav-item
                             a.nav-link(href='/users/listing') Alumni
+                        li.nav-item
+                            a.nav-link(href="/articles/listing") Articles
                         if admin
                             li.nav-item.dropdown
                                 a.nav-link.dropdown-toggle(href="#", id="verifMenu", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Verify
                                 .dropdown-menu(aria-labelledby="verifMenu")
                                     a.dropdown-item(href="/users/verify") Users
+                                    a.dropdown-item(href="/articles/verify") Articles
 
                     ul.nav.navbar-nav.ml-auto
                         li.nav-item.mr-5

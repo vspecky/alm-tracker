@@ -1,4 +1,4 @@
 .messages
     each type in Object.keys(messages)
         each message in messages[type]
-            div.mt-3(class="alert alert-" + type) #{message}
+            .mt-3(class="alert alert-" + type) #{message}

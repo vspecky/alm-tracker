@@ -11,11 +11,28 @@ html(lang="en")
             button.navbar-toggler(type='button', data-toggle='collapse', data-target='#mainNavbar', aria-controls='mainNavbar', aria-expanded='false', aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             #mainNavbar.collapse.navbar-collapse
-                ul.navbar-nav.mr-auto
-                    li.nav-item
-                        a.nav-link(href='/register') Register
-                    li.nav-item
-                        a.nav-link(href='/users') Users
+
+                if auth
+                    ul.nav.navbar-nav.mr-auto
+                        li.nav-item
+                            a.nav-link(href='/users/listing') Alumni
+                        if admin
+                            li.nav-item.dropdown
+                                a.nav-link.dropdown-toggle(href="#", id="verifMenu", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Verify
+                                .dropdown-menu(aria-labelledby="verifMenu")
+                                    a.dropdown-item(href="/users/verify") Users
+
+                    ul.nav.navbar-nav.ml-auto
+                        li.nav-item.mr-5
+                            a.nav-link(href="#", onclick="document.getElementById('logout-form').submit()") Logout
+                            form(action="/users/logout?_method=DELETE", method="POST", id="logout-form")
+
+                else
+                    ul.nav.navbar-nav.ml-auto
+                        li.nav-item.mr-4
+                            a.nav-link(href="/users/register") Register
+                        li.nav-item.mr-5
+                            a.nav-link(href="/users/login") Login
 
         .container
             .container

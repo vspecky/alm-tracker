@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1 Pending Users
+
+    ul.list-group
+        each alm, ind in pending
+            a.list-group-item.list-group-item-action(href="/users/dashboard/"+alm._id)= alm.firstName + " " + alm.middleName + " " + alm.lastName

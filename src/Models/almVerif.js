@@ -13,11 +13,9 @@ const studSchema = Schema({
     companyName: String,
     joinDate: String,
     achievements: String,
-    bio: String,
-    verified: Boolean,
-    admin: Boolean
+    bio: String
 }, {
-    collection: "Students"
+    collection: "VerifStudents"
 });
 
-module.exports = model("AlumniSchema", studSchema);
+module.exports = model("AlmVerifSchema", studSchema);

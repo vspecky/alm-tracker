@@ -1,9 +1,9 @@
 extends layout
 
 block content
-    h1 #{title}
+    h1.mt-4 Registration
     br
-    form(method="POST", action="/register")
+    form(method="POST", action="/users/register")
 
         // Email Address of Alumni
         .form-group
@@ -102,4 +102,4 @@ block content
                     small.form-text.text-muted Character limit: 2000
 
         // Submit Button
-        input.btn.btn-primary(type="submit", value="Register")
+        input.btn.btn-primary(type="submit", value="register")

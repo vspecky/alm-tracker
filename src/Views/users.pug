@@ -4,4 +4,4 @@ block content
     h1 Users
     ul.list-group
         each user, i in users
-            li.list-group-item= user.firstName + " " + user.lastName
+            a.list-group-item.list-group-item-action(href="/users/dashboard/"+user._id)= user.firstName + " " + user.lastName

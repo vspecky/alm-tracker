@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    h1 Dashboard
+    br
+    br
+    ul.list-group
+        li.list-group-item Name: #{alm.firstName + " " + alm.middleName + " " + alm.lastName}
+        li.list-group-item Branch: #{alm.branch}
+        li.list-group-item Graduation Year: #{alm.gradYear}
+        li.list-group-item Higher Studies College: #{alm.highClgName}
+        li.list-group-item Higher Studies Graduation Year: #{alm.highGradYear}
+        li.list-group-item Working at: #{alm.companyName}
+        li.list-group-item Achievements #{alm.achievements}
+        li.list-group-item Bio: #{alm.bio}
+
+    br
+    br
+    unless alm.verified
+        form(method="POST", action="/users/verify/"+alm._id)
+            .form-group
+                label Verify this Alumni?
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="yes")
+                    label.form-check-label Yes
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="no")
+                    label.form-check-label No
+
+            input.btn.btn-primary(type="submit", value="Verify")

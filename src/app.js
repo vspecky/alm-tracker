@@ -38,6 +38,8 @@ app.use(methodOverride("_method"));
 
 // Set static Public folder
 app.use(express.static(join(__dirname, "node_modules")));
+app.use("/public", express.static(join(__dirname, "Public")));
+app.use("/images", express.static(join(__dirname, "Images", "Profile Pics")));
 
 // Express Session
 app.use(session({
@@ -71,7 +73,8 @@ app.get("/", (req, res) => {
         title: "Alumni Tracker",
         h1Cont: "Welcome to the Alumni Portal.",
         auth: req.isAuthenticated(),
-        admin: req.user && req.user.admin
+        admin: req.user && req.user.admin,
+        reqUser: req.user
     });
 });
 
@@ -84,3 +87,12 @@ app.use("/users", usersRouter);
 
 const articlesRouter = require("./Routers/articles.js");
 app.use("/articles", articlesRouter);
+
+const forumRouter = require("./Routers/forum.js");
+app.use("/forum", forumRouter);
+
+const chatsRouter = require("./Routers/chats.js");
+app.use("/chats", chatsRouter);
+
+const dashboardRouter = require("./Routers/dashboard.js");
+app.use("/dashboard", dashboardRouter);

@@ -18,7 +18,8 @@ router.get("/listing", authCheckers.checkAuth, async (req, res) => {
     res.render("articles_list", {
         articles: articles,
         auth: req.isAuthenticated(),
-        admin: req.user && req.user.admin
+        admin: req.user && req.user.admin,
+        reqUser: req.user
     });
 });
 
@@ -28,7 +29,8 @@ router.get("/verify", authCheckers.checkAdmin, async (req, res) => {
     res.render("verify_article", {
         pending: articles,
         auth: req.isAuthenticated(),
-        admin: true
+        admin: true,
+        reqUser: req.user
     });
 });
 
@@ -70,7 +72,8 @@ router.post("/verify/:id", authCheckers.checkAdmin, async (req, res) => {
 router.get("/write", authCheckers.checkAuth, (req, res) => {
     res.render("write_article", {
         auth: req.isAuthenticated(),
-        admin: req.user && req.user.admin
+        admin: req.user && req.user.admin,
+        reqUser: req.user
     });
 });
 
@@ -140,7 +143,8 @@ router.get("/view/:id", authCheckers.checkAuth, async (req, res, next) => {
         article: req.article,
         auth: req.isAuthenticated(),
         admin: req.user && req.user.admin,
-        content: req.cont
+        content: req.cont,
+        reqUser: req.user
     });
 });
 
@@ -152,7 +156,8 @@ router.get("/edit/:id", authCheckers.checkAuth, async (req, res) => {
     res.render("edit_article", {
         article: article,
         auth: req.isAuthenticated(),
-        admin: req.user.admin
+        admin: req.user.admin,
+        reqUser: req.user
     });
 });
 

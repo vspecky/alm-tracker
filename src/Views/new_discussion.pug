@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    h1.mt-3 Create new Discussion
+    br
+    form(method="POST", action="/forum/new")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Title
+                    input.form-control(name="title", type="text", placeholder="Your discussion title...")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Content
+                    textarea.form-control(name="context", rows="9", placeholder="Some context...")
+                    small.form-text.text-muted Character limit: 7000
+        
+        input.btn.btn-primary(type="submit", value="Create")

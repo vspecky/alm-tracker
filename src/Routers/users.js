@@ -4,6 +4,7 @@ const passport = require("passport");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const { checkAuth, checkNotAuth, checkAdmin } = require("../Utils/authCheckers.js");
+const fs = require("fs");
 
 router.get("/listing", checkAuth, (req, res) => {
     Alumni.find({ verified: true, admin: false }, (err, students) => {
@@ -12,7 +13,8 @@ router.get("/listing", checkAuth, (req, res) => {
         res.render("users", { 
             users: students, 
             auth: req.isAuthenticated(),
-            admin: req.user && req.user.admin
+            admin: req.user && req.user.admin,
+            reqUser: req.user
         });
     });
 })
@@ -135,8 +137,10 @@ router.post("/register", checkNotAuth, [
             admin: false
         });
 
-        newAlm.save((err, doc) => {
+        newAlm.save(async (err, doc) => {
             if (err) return console.log(err);
+
+            await fs.copyFile("../Images/Buffer/Default", `../Images/Profile Pics/${doc._id}`);
             
             req.flash("success", "Successfully registered. Your profile has been submitted for verification.");
             res.redirect("/");
@@ -149,8 +153,14 @@ router.get("/login", checkNotAuth, (req, res) => {
 });
 
 router.post("/login", checkNotAuth, passport.authenticate("local", {
-    failureFlash: "Invalid Credentials"
+    failureFlash: "Invalid Credentials",
+    failureRedirect: "/users/login"
 }), (req, res) => {
+    if (!req.user.verified) {
+        req.flash("danger", "You aren't verified yet.");
+        req.logOut();
+        return res.redirect("/");
+    }
     req.flash("success", `Glad to see you ${req.user.firstName} ${req.user.lastName}!`);
     res.redirect("/");
 });
@@ -166,7 +176,8 @@ router.get("/verify", checkAdmin, async (req, res) => {
     res.render("verify_user", {
         pending: pendingVerif,
         auth: req.isAuthenticated(),
-        admin: req.user && req.user.admin
+        admin: req.user && req.user.admin,
+        reqUser: req.user
     });
 });
 
@@ -219,13 +230,16 @@ router.get("/dashboard/:id", checkAuth, async (req, res, next) => {
         res.render("dashboard", {
             alm: alum,
             auth: req.isAuthenticated(),
-            admin: req.user && req.user.admin
+            admin: req.user && req.user.admin,
+            reqUser: req.user,
+            id: alum._id
         });
     }
 }, checkAdmin, (req, res) => {
     res.render("dashboard", {
         alm: req.alumni,
         auth: req.isAuthenticated(),
-        admin: req.user && req.user.admin
+        admin: req.user && req.user.admin,
+        reqUser: req.user
     });
 });

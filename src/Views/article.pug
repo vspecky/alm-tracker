@@ -2,7 +2,7 @@ extends layout
 
 block content
     br
-    h1 #{article.title}
+    h1.mt-3 #{article.title}
     div
         h5= "By "
             a(href="/users/dashboard/"+article.userID) #{article.writtenBy}

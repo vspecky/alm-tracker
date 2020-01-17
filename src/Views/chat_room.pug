@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    h1.mt-3 Chat
+    br
+
+    .row
+        .col-8
+            #alm-chat-container.border.border-dark
+
+
+
+
+    script(src="http://localhost:5000/socket.io/socket.io.js")
+    script(src="/public/chatRoom.js")

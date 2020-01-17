@@ -1,0 +1,32 @@
+extends layout
+
+block content
+    h1.mt-3= disq.title
+    br
+    h5.text-muted= "Started on: " + disq.date
+
+    button.btn.btn-primary.mt-3(type="button", data-toggle="modal", data-target="#reply") Reply
+
+    each post in posts
+        .card.border-dark.mt-3
+            .card-body
+                .media
+                    a.align-self-center(href="/users/dashboard/"+post.posterID)
+                        img.align-self-center.mr-3.rounded-circle(src="/images/"+post.posterID, style="height: 4em;")
+                    .media-body
+                        h6= post.poster + " said:"
+                        p= post.content
+
+    #reply.modal.fade(tabindex='-1', role='dialog', aria-labelledby='replyLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#replyLabel.modal-title Reply
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    form(method="POST", action="/forum/"+id)
+                        .form-group
+                            textarea.form-control(name="reply", rows="5")
+                
+                        input.btn.btn-primary(type="submit", value="Submit")

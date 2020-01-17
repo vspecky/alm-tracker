@@ -1,10 +1,12 @@
 extends layout
 
 block content
-    h1 Dashboard
+    h1.mt-3 Dashboard
     br
     br
-    ul.list-group
+    .text-center
+        img.rounded-circle.mx-auto(src="/images/"+id, style="height: 15em;")
+    ul.list-group.mt-4
         li.list-group-item Name: #{alm.firstName + " " + alm.middleName + " " + alm.lastName}
         li.list-group-item Branch: #{alm.branch}
         li.list-group-item Graduation Year: #{alm.gradYear}
@@ -28,3 +30,44 @@ block content
                     label.form-check-label No
 
             input.btn.btn-primary(type="submit", value="Verify")
+
+    if myDash
+        a.btn.btn-primary(href="/dashboard/edit") Edit Profile
+        button.btn.btn-primary.ml-3(type="button", data-toggle="modal", data-target="#changePass") Change Password
+        button.btn.btn-primary.ml-3(type="button", data-toggle="modal", data-target="#changePfp") Change Profile Pic
+
+
+    #changePass.modal.fade(tabindex='-1', role='dialog', aria-labelledby='changePassLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#changePassLabel.modal-title Change Password
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    form(method="POST", action="/dashboard/passwordchange")
+                        .form-group
+                            label Original Password
+                            input.form-control(type="password", name="orig_pass")
+                        .form-group
+                            label New Password
+                            input.form-control(type="password", name="new_pass")
+                        .form-group
+                            label Confirm Password
+                            input.form-control(type="password", name="conf_pass")
+                        input.btn.btn-primary(type="submit", value="Change Password")
+
+    #changePfp.modal.fade(tabindex='-1', role='dialog', aria-labelledby='changePfpLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#changePfpLabel.modal-title Change Profile Pic
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') ×
+                .modal-body
+                    form(method="POST", action="/dashboard/pfp", enctype="multipart/form-data")
+                        .form-group
+                            label Choose File
+                            input.form-control(type="file", name="pfp")
+                
+                        input.btn.btn-primary(type="submit", value="Submit")

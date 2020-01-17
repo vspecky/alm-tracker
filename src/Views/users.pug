@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    h1 Users
+    h1.mt-3 Users
     ul.list-group
         each user, i in users
             a.list-group-item.list-group-item-action(href="/users/dashboard/"+user._id)= user.firstName + " " + user.lastName

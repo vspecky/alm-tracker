@@ -5,6 +5,7 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
         title Alumni tracker
         link(rel="stylesheet", type="text/css", href="/css/bootstrap.css")
+        link(rel="stylesheet", type="text/css", href="/public/chatRoom.css")
     body
         nav.navbar.navbar-expand-md.navbar-dark.bg-dark
             a.navbar-brand(href='/') AlmTracker
@@ -18,6 +19,10 @@ html(lang="en")
                             a.nav-link(href='/users/listing') Alumni
                         li.nav-item
                             a.nav-link(href="/articles/listing") Articles
+                        li.nav-item
+                            a.nav-link(href="/forum") Forum
+                        li.nav-item
+                            a.nav-link(href="/chats") Chat
                         if admin
                             li.nav-item.dropdown
                                 a.nav-link.dropdown-toggle(href="#", id="verifMenu", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Verify
@@ -26,9 +31,14 @@ html(lang="en")
                                     a.dropdown-item(href="/articles/verify") Articles
 
                     ul.nav.navbar-nav.ml-auto
-                        li.nav-item.mr-5
-                            a.nav-link(href="#", onclick="document.getElementById('logout-form').submit()") Logout
-                            form(action="/users/logout?_method=DELETE", method="POST", id="logout-form")
+                        li.nav-item.dropdown.dropleft.mr-5
+                            a.nav-link.dropdown-toggle(href="#", id="profileMenu", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Profile
+                            .dropdown-menu(aria-labelledby="profileMenu")
+                                img.dropdown-item.rounded-circle(src="/images/"+reqUser._id)
+                                .dropdown-divider
+                                a.dropdown-item(href="/dashboard") Dashboard
+                                a.dropdown-item(href="#", onclick="document.getElementById('logout-form').submit()") Logout
+                                form(action="/users/logout?_method=DELETE", method="POST", id="logout-form")
 
                 else
                     ul.nav.navbar-nav.ml-auto

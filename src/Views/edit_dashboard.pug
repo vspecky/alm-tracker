@@ -1,0 +1,74 @@
+extends layout
+
+block content
+    h1.mt-3 Edit
+    br
+    form(method="POST", action="/dashboard/edit")
+
+        // Email Address of Alumni
+        .form-group
+            label Email Address
+            input.form-control(name="email", type="email", placeholder="eg: jackdoe@email.com", value=usr.email)
+            small.form-text.text-muted Your email address is private and will only be used for login purposes.
+
+        // Name of Alumni (First, Middle, Last)
+        .form-group
+            label Name
+            .form-row
+                .col
+                    input.form-control(name="first_name", type="text", placeholder="First Name", value=usr.firstName)
+                .col
+                    input.form-control(name="father_name", type="text", placeholder="Middle Name", value=usr.middleName)
+                .col
+                    input.form-control(name="last_name", type="text", placeholder="Last Name", value=usr.lastName)
+
+        // Branch & Graduation Year
+        .form-group
+            .form-row
+                .col-3
+                    label Branch
+                    select.form-control(name="branch", value=usr.branch)
+                        option(selected) #{usr.branch}
+                        option Computer Engineering
+                        option Mechanical Engineering
+                        option Civil Engineering
+                        option Electrical Engineering
+                        option Chemical Engineering
+                .col-2
+                    label Graduation Year
+                    input.form-control(name="grad_year", type="text", placeholder="eg: 2020", value=usr.gradYear)
+
+        .form-group
+            .form-row
+                .col-6
+                    label Name of College for Higher Education
+                    input.form-control(name="high_college", type="text", value=usr.highClgName)
+                .col-2
+                    label Graduation Year
+                    input.form-control(name="high_grad_year", type="text", value=usr.highGradYear)
+
+        .form-group
+            .form-row
+                .col-6
+                    label Name of Company
+                    input.form-control(name="company_name", type="text", value=usr.companyName)
+                .col-2
+                    label Join Date
+                    input.form-control(name="company_join_date", type="date", value="2018-07-22")
+
+        .form-group
+            .form-row
+                .col-8
+                    label Achievements/Internships/etc
+                    textarea.form-control(name="achievements", rows="4")= usr.achievements
+                    small.form-text.text-muted Character Limit: 2000
+
+        .form-group
+            .form-row
+                .col-8
+                    label Bio
+                    textarea.form-control(name="bio", rows="4")= usr.bio
+                    small.form-text.text-muted Character limit: 2000
+
+        // Submit Button
+        input.btn.btn-primary(type="submit", value="Edit")

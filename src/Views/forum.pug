@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    h1.mt-3 Forum
+    br
+    a.btn.btn-primary(href="forum/new") Create new Discussion
+
+    each topic in topics
+        .card.border-dark.mt-3
+            .card-body.text-dark
+                h4.card-title 
+                    a(href="/forum/"+topic._id) #{topic.title}
+                h6.card-text= "Posted By: "
+                    a(href="/users/dashboard/"+topic.posterID)
+                        b #{topic.poster}
+
+                .row
+                    .col
+                        h6.text-muted= "Started on: " + topic.date
+                    .col
+                        h6.text-muted= "Posts: " + topic.posts.length

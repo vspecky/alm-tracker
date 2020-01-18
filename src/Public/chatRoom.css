@@ -1,4 +1,26 @@
 #alm-chat-container {
     overflow-y: auto;
+    overflow-x: hidden;
     height: 40em;
+}
+
+#send-container {
+    height: 40em;
+    position: relative;
+}
+
+#msg-form {
+    position: absolute;
+    bottom: 0px;
+}
+
+.prof-img {
+    height: 4em;
+}
+
+.prevent-overflow {
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }

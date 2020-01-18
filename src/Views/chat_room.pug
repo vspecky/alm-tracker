@@ -7,9 +7,16 @@ block content
     .row
         .col-8
             #alm-chat-container.border.border-dark
+        .col
+            #send-container.align-bottom
+                form#msg-form(method="POST", action="/chats")
+                    .form-group
+                        label Send Message
+                        textarea#msg-input.form-control(rows="6", cols="50")
+                    input.btn.btn-primary(type="submit", value="Send")
 
-
-
-
+    script.
+        var myUsr = !{JSON.stringify(userDetails)}
+        var myRoom = !{JSON.stringify(myRoom)}
     script(src="http://localhost:5000/socket.io/socket.io.js")
     script(src="/public/chatRoom.js")

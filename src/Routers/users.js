@@ -1,17 +1,19 @@
 const router = module.exports = require("express").Router();
 const Alumni = require("../Models/alumniModel.js");
 const passport = require("passport");
+const { join } = require("path");
 const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcrypt");
 const { checkAuth, checkNotAuth, checkAdmin } = require("../Utils/authCheckers.js");
 const fs = require("fs");
+const mailTransport = require("../Utils/mailer.js");
 
 router.get("/listing", checkAuth, (req, res) => {
     Alumni.find({ verified: true, admin: false }, (err, students) => {
         if (err) return console.error(err);
 
-        res.render("users", { 
-            users: students, 
+        res.render("users", {
+            users: students,
             auth: req.isAuthenticated(),
             admin: req.user && req.user.admin,
             reqUser: req.user
@@ -47,11 +49,11 @@ router.post("/register", checkNotAuth, [
                 throw new Error("Please enter a password.");
             else if (!(value.length >= 8 && value.length <= 20))
                 throw new Error("Password must be 8-20 characters long.")
-            else if (value !== req.body.conf_pass) 
+            else if (value !== req.body.conf_pass)
                 throw new Error("Passwords don't match.");
             else return value;
         }),
-    
+
     // Branch Validation
     check("branch")
         .custom((value, { req, location, path }) => {
@@ -95,21 +97,21 @@ router.post("/register", checkNotAuth, [
     // Achievements/Internships/etc & Bio validation
     check("achievements", "The 'Achievements/Internships/etc' field can only be 2000 characters long")
         .isLength({ max: 2000 }),
-    
+
     check("bio", "The 'Bio' field can only be 2000 characters long")
         .isLength({ max: 2000 })
-        
+
 ], async (req, res) => {
 
     const validationErrors = validationResult(req);
-    
+
     if (!validationErrors.isEmpty()) {
         for (const err of validationErrors.errors) req.flash("danger", err.msg);
         res.redirect("/users/register");
     }
     else {
 
-        const existingUsr = await Alumni.findOne({ email: req.body.email });
+        const existingUsr = await Alumni.findOne({ email: req.body.email }); // Promise { <pending> }
 
         if (existingUsr) {
             req.flash("danger", "That email is already registered");
@@ -140,8 +142,17 @@ router.post("/register", checkNotAuth, [
         newAlm.save(async (err, doc) => {
             if (err) return console.log(err);
 
-            await fs.copyFile("../Images/Buffer/Default", `../Images/Profile Pics/${doc._id}`);
-            
+            await fs.copyFile(join(__dirname, "..", "Images", "Buffer", "Default"), join(__dirname, "..", "Images", "Profile Pics", `${doc._id}`), (err) => {
+                if (err) console.log(err);
+            });
+
+            mailTransport.sendMail({
+                from: "AlmTracker <thelonenerd9913@gmail.com>",
+                to: doc.email,
+                subject: "Registration for Alumni Portal.",
+                text: `Hi ${doc.firstName}! Thanks for registering on the Alumni Portal. Your account shall be verified soon and you will receive an email once it is verified.`
+            });
+
             req.flash("success", "Successfully registered. Your profile has been submitted for verification.");
             res.redirect("/");
         });
@@ -184,24 +195,31 @@ router.get("/verify", checkAdmin, async (req, res) => {
 router.post("/verify/:id", checkAdmin, async (req, res) => {
 
     const val = req.body.verify;
+    const toVerify = await Alumni.findById(req.params.id);
+
+    if (!toVerify) {
+        req.flash("danger", "User does not exist.");
+        return res.redirect("/users/verify");
+    }
 
     if (!val) {
         req.flash("danger", "Please choose whether to verify the user or not.");
         return res.redirect(`/users/dashboard/${req.params.id}`);
     }
     else if (val === "no") {
+        mailTransport.sendMail({
+            from: "AlmTracker <thelonenerd9913@gmail.com>",
+            to: toVerify.email,
+            subject: "Alumni Portal Verification.",
+            text: `${toVerify.firstName}, we're sorry to inform you that your account has been marked unverified. Please contact the College Alumni Co-ordinator.`
+        });
         await Alumni.findByIdAndDelete(req.params.id);
         req.flash("warning", "The user was marked unverified.");
         return res.redirect("/users/verify");
     }
 
-    const toVerify = await Alumni.findById(req.params.id);
 
-    if (!toVerify) {
-        req.flash("danger", "User does not exist.");
-        res.redirect("/users/verify");
-    }
-    else if (toVerify.verified) {
+    if (toVerify.verified) {
         req.flash("warning", "User is already verified.");
         res.redirect("/users/verify");
     }
@@ -209,6 +227,13 @@ router.post("/verify/:id", checkAdmin, async (req, res) => {
         toVerify.verified = true;
         toVerify.save((err, doc) => {
             if (err) return console.error(err);
+
+            mailTransport.sendMail({
+                from: "AlmTracker <thelonenerd9913@gmail.com>",
+                to: doc.email,
+                subject: "Alumni Portal Verification",
+                text: "Congratulations! you are now an official part of your College Alumni Community. You can log into your account on the portal!"
+            });
 
             req.flash("success", `${doc.firstName} ${doc.lastName} was successfully verified.`);
             res.redirect("/users/verify");

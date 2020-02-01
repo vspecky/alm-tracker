@@ -17,9 +17,10 @@ module.exports = {
     
     checkAdmin(req, res, next) {
         if (req.isAuthenticated()) {
-            if (req.user.hash === "$2b$10$5r23Tj5.5HevdfuTMmsj1efhiQjRh8qY1KClP7WPhC5h3DhBGzpka") {
+            if (req.user.admin) {
                 return next();
             }
+            else return res.redirect("/");
         }
         else return res.redirect("/");
     },

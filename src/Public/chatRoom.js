@@ -62,4 +62,9 @@ const createMessage = (myuser, msg) => {
     content.classList.add("prevent-overflow");
     content.innerHTML = msg;
     mediaBody.append(content);
+
+    outer.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+    });
 }

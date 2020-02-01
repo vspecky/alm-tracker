@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1.mt-3 Alumni clubs
+    br
+    if !verify
+        a.btn.btn-primary(href="/clubs/proposal") Propose New Club
+    br
+    each club in clubs
+        .jumbotron.mt-4
+            h1.display-4= club.name
+            hr.my-4
+            p.lead= club.about
+            a.btn.btn-primary(href="/clubs/"+club._id) Learn More

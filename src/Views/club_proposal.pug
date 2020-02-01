@@ -1,0 +1,33 @@
+extends layout
+
+block content
+    h1.mt-3 Club proposal
+    br
+    form(method="POST", action="/clubs/proposal")
+    
+        .form-group
+            label Club name
+            input.form-control(type="text", name="clubName")
+            
+        .form-group
+            label Club field
+            input.form-control(type="text", name="clubField")
+            
+        .form-group
+            label Club Home City
+            input.form-control(type="text", name="clubHome")
+            
+        .form-group
+            label Club Vision
+            textarea.form-control(rows="7", name="clubVision")
+            
+        .form-group
+            label About Club
+            textarea.form-control(rows="7", name="clubAbout")
+            
+        .form-group
+            label Club Requirements
+            textarea.form-control(rows="7", name="clubReqs")
+            small.text-muted Separate your requirements with new lines.
+            
+        input.btn.btn-primary(type="submit", action="Submit")

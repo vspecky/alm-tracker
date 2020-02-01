@@ -3,10 +3,14 @@ extends layout
 block content
     br
     h1.mt-3 #{article.title}
-    div
-        h5= "By "
-            a(href="/users/dashboard/"+article.userID) #{article.writtenBy}
-        small Submitted on #{article.date}
+    .card.border-0
+        .card-body
+            .media.border-0
+                img.mr-3.rounded-circle.prof-img(src="/images/"+article.userID)
+                .media-body
+                    h5= "By "
+                        a(href="/users/dashboard/"+article.userID) #{article.writtenBy}
+                    small Submitted on #{article.date}
     br
     each str in content
         p= str

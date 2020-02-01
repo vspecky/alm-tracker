@@ -15,7 +15,8 @@ const studSchema = Schema({
     achievements: String,
     bio: String,
     verified: Boolean,
-    admin: Boolean
+    admin: Boolean,
+    clubs: []
 }, {
     collection: "Students"
 });

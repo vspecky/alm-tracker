@@ -79,6 +79,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/test", (req, res) => {
+    console.log(req.headers);
     res.render("test");
 });
 
@@ -96,3 +97,6 @@ app.use("/chats", chatsRouter);
 
 const dashboardRouter = require("./Routers/dashboard.js");
 app.use("/dashboard", dashboardRouter);
+
+const clubsRouter = require("./Routers/clubs.js");
+app.use("/clubs", clubsRouter);

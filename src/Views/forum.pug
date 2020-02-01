@@ -8,14 +8,17 @@ block content
     each topic in topics
         .card.border-dark.mt-3
             .card-body.text-dark
-                h4.card-title 
-                    a(href="/forum/"+topic._id) #{topic.title}
-                h6.card-text= "Posted By: "
-                    a(href="/users/dashboard/"+topic.posterID)
-                        b #{topic.poster}
+                .media.border-0
+                    img.rounded-circle.prof-img.mr-3(src="/images/"+topic.posterID)
+                    .media-body
+                        h4.card-title 
+                            a(href="/forum/"+topic._id) #{topic.title}
+                        h6.card-text= "Posted By: "
+                            a(href="/users/dashboard/"+topic.posterID)
+                                b #{topic.poster}
 
-                .row
-                    .col
-                        h6.text-muted= "Started on: " + topic.date
-                    .col
-                        h6.text-muted= "Posts: " + topic.posts.length
+                        .row
+                            .col
+                                h6.text-muted= "Started on: " + topic.date
+                            .col
+                                h6.text-muted= "Posts: " + topic.posts.length

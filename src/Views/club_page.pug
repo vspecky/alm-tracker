@@ -1,0 +1,48 @@
+extends layout
+
+block content
+    h1.mt-3= club.name
+    br
+    h3 Vision
+    h6.mt-3= club.vision
+    br
+    h3 Field
+    h6.mt-3= club.field
+    br
+    h3 Home
+    h6.mt-3= club.home
+    br
+    h3 Founder
+    h6
+        a(href="/users/dashboard/"+club.founderID)= club.founder
+    br
+    h3 About
+    h6.mt-3= club.about
+    br
+    h3 Joining Requirements
+    ul.list-group-flush.mt-3
+        each req in club.joinReqs
+            li.list-group-item= req
+
+    br
+    unless club.approved
+        form(method="POST", action="/clubs/verify/"+club._id)
+            .form-group
+                label Approve this Club?
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="yes")
+                    label.form-check-label Yes
+                .form-check
+                    input.form-check-input(name="verify", type="radio", value="no")
+                    label.form-check-label No
+
+            input.btn.btn-primary(type="submit", value="Verify")
+
+    br
+    unless isMember
+        a.btn.btn-primary(href="/clubs/apply/"+club._id) Apply for Membership
+
+    br
+    if isMember
+        a.btn.btn-primary(href="/chats/club/"+club._id) Open Club Chat
+        

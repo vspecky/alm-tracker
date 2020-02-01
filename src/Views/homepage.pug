@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    h1.mt-3 Homepage
+    h2.mt-3 Recent Articles
+    .row.mt-3
+        each article in duo
+            .col-sm-6
+                .card
+                    .card-body
+                        h5.card-title= article.title + " [By " + article.writtenBy + "]"
+                        p.card-text= article.snippet
+                        a.btn.btn-primary(href="/articles/view/"+article._id) Read More...
+
+    
+
+
+    

@@ -135,7 +135,8 @@ router.get("/view/:id", authCheckers.checkAuth, async (req, res, next) => {
             auth: req.isAuthenticated(),
             admin: req.user && req.user.admin,
             content: content,
-            myArticle: art.userID == req.user._id
+            myArticle: art.userID == req.user._id,
+            reqUser: req.user
         });
     }
 }, authCheckers.checkAdmin, (req, res) => {

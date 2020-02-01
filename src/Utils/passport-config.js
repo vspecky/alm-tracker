@@ -25,12 +25,14 @@ const initPassport = (passport) => {
 
     passport.use(new LocalStrategy({ usernameField: "email" }, authUser));
 
+
     passport.serializeUser((user, done) => done(null, user.email));
     passport.deserializeUser(async (email, done) => {
         const usr = await Alumni.findOne({ email: email });
 
         return done(null, usr);
     });
+
 }
 
 module.exports = initPassport;
